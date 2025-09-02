@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quanition-studio"
+version = "1.0.0"
+description = "Quanition Studio: quantum-inspired decision modeling & economics simulations (PySide6)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Mirza Niaz Zaman Elin" }]
+requires-python = ">=3.9"
+keywords = ["quantum cognition", "decision theory", "economics", "finance", "PySide6", "GUI"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering",
+  "Framework :: Qt"
+]
+dependencies = ["PySide6>=6.6", "python-docx>=1.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/USER/quanition-studio"
+Issues = "https://github.com/USER/quanition-studio/issues"
+
+[project.scripts]
+quanition-studio = "quanition_studio.app:main"
+
+[tool.setuptools.packages.find]
+include = ["quanition_studio*"]
