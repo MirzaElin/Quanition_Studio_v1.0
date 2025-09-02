@@ -24,8 +24,7 @@ conditional judgments, (ii) Quantum Decision Theory (QDT), (iii) Contextuality�
 quantum games, (v) binomial option pricing, and (vi) a simple monetary sandbox—behind an easy‑to‑use GUI. Results can be
 exported as HTML reports. 
 
-The repository provides a standard Python package, tests, and documentation to meet the Journal of Open Source Software (JOSS)
-submission criteria. While the application is referred to as **Quanition Studio** in the interface, the public repository may
+The repository provides a standard Python package, tests, and documentation to meet the. While the application is referred to as **Quanition Studio v1.0** in the interface, the public repository may
 use the slug `quanition-studio` for packaging/installation convenience.
 
 # Statement of need
