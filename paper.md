@@ -9,84 +9,38 @@ tags:
   - Python
 authors:
   - name: Mirza Niaz Zaman Elin
+    orcid: 0000-0001-9577-7821
     affiliation: "1"
 affiliations:
-  - name: AMAL Youth & Family Centre, St. John's, NL, Canada
+  - name: "AMAL Youth and Family Centre, St. John's, NL, Canada"
     index: 1
-date: 2025-09-02
+date: 2025-09-10
+bibliography: paper.bib
 ---
 
 # Summary
 
-**Quanition Studio** is a Python/PySide6 desktop application for researchers and students working at the intersection of
-decision science, quantum‑inspired cognition, and economics. The software bundles six methods—(i) Hilbert‑space fitting of
-conditional judgments, (ii) Quantum Decision Theory (QDT), (iii) Contextuality‑by‑Default (CbD) checks, (iv) Eisert‑type
-quantum games, (v) binomial option pricing, and (vi) a simple monetary sandbox—behind an easy‑to‑use GUI. Results can be
-exported as HTML reports. 
-
-The repository provides a standard Python package, tests, and documentation to meet the. While the application is referred to as **Quanition Studio v1.0** in the interface, the public repository may
-use the slug `quanition-studio` for packaging/installation convenience.
+Quanition Studio v1.0.0 is a small, reusable Python library—plus a command-line interface—that exposes headless implementations of several compact analyses originally bundled in a GUI: a Hilbert-space fit for conditional probabilities, a Quantum Decision Theory (QDT) utility-plus-attraction model, a Contextuality-by-Default (CbD) check, a lightweight Eisert-style quantum game explorer, a Cox–Ross–Rubinstein binomial option pricer, and a toy monetary sandbox. The package is designed for transparent, reproducible research: it provides an importable API and a simple CLI, includes examples for quick trials, and ships with unit tests and GitHub Actions CI. By separating computation from any user interface and keeping dependencies light, QuanEcon Core enables scripting in notebooks and pipelines, classroom demonstrations, and small research prototypes without coupling to a desktop app.
 
 # Statement of need
 
-Researchers in behavioral economics and cognitive science increasingly explore quantum‑inspired models to account for order effects,
-interference, and context dependence in judgments and choices [@BusemeyerBruza2012; @YukalovSornette2016]. However, practitioners
-often face a fragmented tooling landscape: small scripts are scattered across papers, GUI tools are rare, and reproducing figures
-or exploring alternative parameterizations requires substantial effort. **Quanition Studio** addresses this gap by offering a single,
-installable desktop application that (a) reads common data formats (CSV/XLSX), (b) runs multiple quantum‑inspired and classical
-models out‑of‑the‑box, and (c) produces exportable, publication‑ready tables and figures without requiring users to assemble a
-bespoke environment.
+Researchers, students, and instructors who work with quantum-like models often face a gap between what the literature explains and what is easily runnable in a notebook or a simple script. Core ideas such as Quantum Decision Theory, Contextuality-by-Default, Hilbert space interference models, and basic quantum game formalisms are well established conceptually [@busemeyer2012; @yukalov2016; @dzhafarov2016; @eisert1999], but practical, minimal examples are scattered across papers [@popp2023; @russo2021; @gray2018; @gupt2019; @roy2023], tied to heavyweight graphical tools, or reimplemented ad hoc without tests. This fragmentation raises the cost of reproducing small figures, preparing teaching materials, and running quick experiments in the familiar NumPy/pandas workflow [@harris2020; @mckinney2010].
 
-Typical user groups include: (1) cognition researchers analyzing conditional probabilities or attraction effects; (2) decision and
-game theorists teaching Eisert‑type quantum games; (3) finance instructors demonstrating binomial option pricing; and (4) applied
-social scientists who benefit from quick “what‑if” explorations of simple monetary dynamics.
+Quanition Studio v1.0.0 addresses this need by providing a lightweight, headless library with a very small and consistent Python API. The goal is not to introduce new theory, but to package a few recurring computations in a form that is easy to import, easy to read, and easy to test. The library includes: a Hilbert space phase-fit for conditional probabilities; a Quantum Decision Theory routine that combines utility terms with attraction adjustments; a Contextuality-by-Default checker based on standard summary indices; a compact quantum-game explorer following the Eisert–Wilkens–Lewenstein setup with three strategies per player; a Cox–Ross–Rubinstein binomial option pricer as a finance baseline [@cox1979]; and a small money/household sandbox. Each module is intentionally narrow so that users can call one function with plain arrays or Series and get a result suitable for notebooks, slides, or automated tests.
 
-# Functionality
+Compared with general-purpose scientific libraries, Quanition Studio v1.0.0 supplies domain-specific glue that users typically rewrite: input shape checks, normalization and consistency tests, numerically sensible defaults, and tiny convenience helpers that make short scripts reliable. Compared with GUI-first tools, it cleanly separates computation from presentation, which enables headless execution in continuous integration and in batch runs, while remaining straightforward to wrap with a classroom GUI if needed.
 
-The application exposes six modules and an “Auto mode” that detects what can be run directly from an imported dataset.
-
-- **Hilbert module.** Fits conditional judgments in a two‑dimensional Hilbert space and sweeps over phase φ to match \(p(A\mid B)\),
-  returning best‑fit φ and implied θ.
-- **QDT module.** Computes utility factors via softmax and combines them with attraction factors, yielding normalized final choice
-  probabilities [@BusemeyerBruza2012].
-- **CbD module.** Evaluates the S_odd versus (2+ICC) threshold to flag contextuality in a 2×2 system [@DzhafarovKujala2016].
-- **Quantum Game module.** Implements an Eisert‑style 2‑player, 2‑strategy quantized game and reports profiles that maximize
-  joint payoffs [@Eisert1999].
-- **QFinance module.** Prices European call options using the Cox–Ross–Rubinstein binomial tree [@CRR1979].
-- **QMoney module.** A lightweight deterministic sandbox for household budget/wealth trajectories under simple behavioral rules.
-
-The GUI (Qt/PySide6) supports CSV/XLSX import, interactive tables/plots, and one‑click **HTML** or **DOCX** report export.
-A Learning Center summarizes the theoretical ideas behind each method, and built‑in documentation tabs (EULA/Privacy/Manual)
-facilitate distribution in teaching/research settings.
-
-# Design and implementation
-
-Quanition Studio is implemented in Python 3.9+ with a Qt (PySide6) front‑end. Each method is encapsulated in a small module exposing
-a single `run(cfg: dict) -> RunResult` entry point (returning a short summary string, figures, tables, and details). The GUI
-orchestrates: (i) **Auto mode** that infers runnable analyses from column headers, and (ii) **Manual mode** where users provide a JSON
-“spec” for a specific method. The reporter builds self‑contained HTML/DOCX artifacts for archiving or sharing.
+The intended audience includes instructors preparing short demonstrations, researchers who want unit-tested baselines for replication and ablation studies, and students learning by reproducing canonical results without installing large desktop stacks. By shipping examples, tests, and continuous integration alongside a compact API, Quanition Studio v1.0.0 lowers the activation energy for reproducible teaching and small research prototypes in this space.
 
 # Quality control
 
-The repository includes unit tests (pytest) that exercise each module on small fixtures: (1) softmax normalization in QDT, (2) detection
-fields in CbD, (3) spectrum computation in quantum games, (4) price positivity in the CRR model, (5) trajectory length checks in the
-monetary sandbox, and (6) a package import smoke test. These tests are designed to run headlessly in CI.
+Unit tests cover numerical sanity for each module (probability normalization, thresholds, payoff search, positive option price, trajectory length). GitHub Actions runs tests on each push/PR. CSV demos are included for quick trials.
 
-# Examples
+# State of the field
 
-The app ships with a one‑click sample‑data generator (Hilbert/QDT/CbD/QFinance/QMoney/QGame). Users can open a sample, run Auto mode,
-inspect the result tables/plots, and export a report. Programmatic examples are provided in the README for scripting workflows.
-
-# Availability
-
-- **Source code:** https://github.com/USER/quanecon-studio (public repository; replace `USER` with your handle)
-- **License:** MIT
-- **Python:** 3.9+
-- **OS:** Windows, macOS, Linux (Qt support required)
-- **Dependencies:** PySide6 (Qt for Python) [@PySide6], optional `python-docx` for DOCX export
-
-# Conflict of Interest Statement
-The author declares that there are no financial or non-financial conflicts of interest relevant to this work.
+The package is a pragmatic, educational collection rather than a novel contribution. It draws on standard references in quantum cognition [@busemeyer2012; @yukalov2016], contextuality [@dzhafarov2016], quantum games [@eisert1999], and option pricing [@cox1979], and relies on the scientific Python stack [@harris2020; @mckinney2010].
 
 
-# References
+# Conflict of interest
+
+The author declares no competing interests.
